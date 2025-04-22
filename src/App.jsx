@@ -20,6 +20,8 @@ function App() {
   const galleryRef = useRef(null);
 
   useEffect(() => {
+    if (!query) return;
+
     const abortController = new AbortController();
 
     const getData = async () => {

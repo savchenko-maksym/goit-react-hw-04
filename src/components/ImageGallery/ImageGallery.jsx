@@ -1,10 +1,10 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import ImageCard from "../ImageCard/ImageCard";
 import s from "./ImageGallery.module.css";
 
-const ImageGallery = ({ images, onImageClick }) => {
+const ImageGallery = forwardRef(({ images, onImageClick }, ref) => {
   return (
-    <ul className={s.imgList}>
+    <ul className={s.imgList} ref={ref}>
       {images.map((img) => (
         <li
           className={s.imgItem}
@@ -16,6 +16,6 @@ const ImageGallery = ({ images, onImageClick }) => {
       ))}
     </ul>
   );
-};
+});
 
 export default ImageGallery;

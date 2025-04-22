@@ -24,7 +24,7 @@ const SearchBar = ({ handleChangeQuery }) => {
     <header className={s.header}>
       <form className={s.headerForm} onSubmit={handleSubmit}>
         <button className={s.headerFormBtn} type="submit">
-          <BiSearchAlt2 />
+          <BiSearchAlt2 size="24" />
         </button>
         <input
           type="text"

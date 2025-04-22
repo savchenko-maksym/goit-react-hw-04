@@ -4,7 +4,14 @@ import s from "./ImageModal.module.css";
 
 Modal.setAppElement("#root");
 
-const ImageModal = ({ isOpen, onClose, imageUrl, alt }) => {
+const ImageModal = ({
+  isOpen,
+  onClose,
+  imageUrl,
+  alt,
+  autorName,
+  instagram,
+}) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -12,7 +19,21 @@ const ImageModal = ({ isOpen, onClose, imageUrl, alt }) => {
       overlayClassName={s.overlay}
       className={s.content}
     >
-      <img src={imageUrl} alt={alt} className={s.image} />
+      <div className={s.imageWrapper}>
+        <img src={imageUrl} alt={alt} className={s.image} />
+        <div className={s.authorInfo}>
+          <p>{autorName}</p>
+          {instagram && (
+            <a
+              href={`https://instagram.com/${instagram}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              @{instagram}
+            </a>
+          )}
+        </div>
+      </div>
     </Modal>
   );
 };

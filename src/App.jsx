@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { fetchImages } from "./components/services/api";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
@@ -17,6 +17,7 @@ function App() {
   const [totalPages, setTotalPages] = useState(0);
   const [isError, setIsError] = useState(false);
   const [modalImage, setModalImage] = useState(null);
+  const galleryRef = useRef(null);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -57,13 +58,25 @@ function App() {
     setModalImage(null);
   };
 
+  const scrollPage = () => {
+    const firstImg = galleryRef.current?.firstElementChild;
+    if (firstImg) {
+      const { height } = firstImg.getBoundingClientRect();
+      window.scrollBy({
+        top: height * 3 + 55,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <div>
       <SearchBar handleChangeQuery={handleChangeQuery} />
-      <ImageGallery images={images} onImageClick={openModal} />
+      <ImageGallery images={images} onImageClick={openModal} ref={galleryRef} />
       {isLoading && <Loader />}
       {page < totalPages && !isLoading && (
-        <LoadMoreBtn page={page} setPage={setPage} />
+        <LoadMoreBtn page={page} setPage={setPage} scrollPage={scrollPage} />
       )}
       {isError && <ErrorMessage />}
       {modalImage && (
@@ -72,6 +85,8 @@ function App() {
           onClose={closeModal}
           imageUrl={modalImage.urls.regular}
           alt={modalImage.urls.alt_description}
+          autorName={modalImage.user.name}
+          instagram={modalImage.user.instagram_username}
         />
       )}
     </div>
